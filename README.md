@@ -27,7 +27,7 @@ func main() {
 	
 	yeClient := kanyerest.NewYeClient(httpCLient)
 	
-	res, err := yeClient.GetQuote()
+	res, err := yeClient.GetQuote(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,6 +1,7 @@
 package kanyerest
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -13,7 +14,7 @@ type Quote struct {
 }
 
 type Client interface {
-	GetQuote() (*Quote, error)
+	GetQuote(ctx context.Context) (*Quote, error)
 }
 
 type client struct {
@@ -24,8 +25,13 @@ func NewYeRestClient(httpClient *http.Client) Client {
 	return &client{httpClient}
 }
 
-func (c *client) GetQuote() (*Quote, error) {
-	resp, err := c.httpClient.Get(apiUrl)
+func (c *client) GetQuote(ctx context.Context) (*Quote, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, apiUrl, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
