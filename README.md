@@ -9,8 +9,10 @@ go get github.com/rovergulf/kanyerest
 
 ### Example usage
 ```go
+package main
 
 import (
+	"log"
 	"context"
 	"net/http"
 	
